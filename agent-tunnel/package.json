@@ -4,7 +4,7 @@
   "description": "Provide a tunnel for local agents",
   "main": "index.js",
   "author": "Daniel Bluhm <dbluhm@pm.me>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "localtunnel": "^2.0.1",
