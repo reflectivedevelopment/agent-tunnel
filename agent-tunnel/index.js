@@ -8,15 +8,16 @@ const argv = yargs
   .demandCommand(1, "Must enter service")
   .alias("p", "port")
   .describe("p", "Port to manage tunnel")
+  .describe("host", "URL for the upstream proxy server")
   .alias("h", "help")
   .help("h")
   .argv
-const [localhost, localport] = argv._[0].split(":")
+const [localhost, localport, host] = argv._[0].split(":")
 
 var tunnel = null
 
 app.get("/start", async (req, res) => {
-  tunnel = await localtunnel({port: localport, local_host: localhost})
+  tunnel = await localtunnel({port: localport, local_host: localhost, host: host})
   tunnel.on("request", (info) => { console.log(info) })
   tunnel.on("error", (err) => { console.error(err) })
   tunnel.on("close", () => { console.log("Closing tunnel") })
