@@ -12,12 +12,12 @@ const argv = yargs
   .alias("h", "help")
   .help("h")
   .argv
-const [localhost, localport, host] = argv._[0].split(":")
+const [localhost, localport] = argv._[0].split(":")
 
 var tunnel = null
 
 app.get("/start", async (req, res) => {
-  tunnel = await localtunnel({port: localport, local_host: localhost, host: host})
+  tunnel = await localtunnel({port: localport, local_host: localhost, host: argv.host})
   tunnel.on("request", (info) => { console.log(info) })
   tunnel.on("error", (err) => { console.error(err) })
   tunnel.on("close", () => { console.log("Closing tunnel") })
@@ -44,4 +44,5 @@ app.get("/status", async (req, res) => {
 
 app.listen(argv.port, () => {
   console.log(`Tunnel to ${localhost}:${localport} running; mangement available on ${argv.port}`)
+  console.log(`Using ${argv.host}`)
 })
